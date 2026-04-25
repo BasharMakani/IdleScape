@@ -45,15 +45,9 @@ public class UIManager : MonoBehaviour
     }
 
 
-    /* SHOP PAGE */
+    /* SHOP & EQUIP PAGE */
     public void OnBackButtonClicked(){
         ShowPanel(mainPanel);
     }
 
-    
-
-    void Update()
-    {
-        
-    }
 }
