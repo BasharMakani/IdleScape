@@ -47,6 +47,7 @@ The game features three core interfaces:
 | Name | Role |
 |------|------|
 | Max | 3D Models, Documentation |
+| Laura | 3D Animations, Animation Setup, Asset Imports |
 | Nolan | UI, UI Sound Design, Gamestate |
 | Alejandro | Shaders, Mechanics, Sound and Audio |
 | Bashar | Mechanics, Animations, Repo Maintenance |
