@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -21,14 +22,25 @@ public class UIManager : MonoBehaviour
     [SerializeField] private AudioClip inventory1;
     [SerializeField] private AudioClip inventory2;
 
+    // Top Container Trackers (coins, exp)
+    [SerializeField] private TMP_Text coinText;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Start()
     {
         ShowPanel(mainPanel);
-        audioSource = GetComponent<AudioSource>();
+        
 
+        // Initialize GameManager flags
         GameManager.Instance.OnSkillSwapped += UpdateSkillIcons;
         RefreshSkillIcons();
+
+        GameManager.Instance.OnCoinsChanged += UpdateCoinDisplay;
+        UpdateCoinDisplay();
     }
 
     void ShowPanel(GameObject panel) {
@@ -49,7 +61,7 @@ public class UIManager : MonoBehaviour
         ShowPanel(equipPanel);
     }
 
-    // Called from GameManager listener, effectively OnSwapSkillButtonClicked()
+    // Called from GameManager when skill swap button pressed
     void UpdateSkillIcons()
     {
         audioSource.PlayOneShot(clickConfirm);
@@ -61,6 +73,31 @@ public class UIManager : MonoBehaviour
         ActiveSkill current = GameManager.Instance.currentSkill;
         currentSkillIcon.sprite = current == ActiveSkill.Woodcutting ? woodcuttingSprite : miningSprite;
         otherSkillIcon.sprite = current == ActiveSkill.Woodcutting ? miningSprite : woodcuttingSprite;
+    }
+
+    // Called from GameManager when coin count increments
+    void UpdateCoinDisplay()
+    {
+        long coins = GameManager.Instance.coins;
+        string coinDisplay;
+
+        if      (coins < 0)                 coinDisplay = "INF";
+        else if (coins >= 1000000000000000) coinDisplay = "INF";
+        else if (coins >= 1000000000000)    coinDisplay = FormatCoins(coins, 1000000000000f, "T");
+        else if (coins >= 1000000000)       coinDisplay = FormatCoins(coins, 1000000000f, "B");
+        else if (coins >= 1000000)          coinDisplay = FormatCoins(coins, 1000000f, "M");
+        else if (coins >= 1000)             coinDisplay = FormatCoins(coins, 1000f, "K");
+        else                                coinDisplay = coins.ToString();
+        
+        coinText.text = coinDisplay;
+    }
+
+    // Helper method for extracting exactly 3 digits for coin display
+    string FormatCoins(long coins, float divisor, string suffix)
+    {
+        float value = coins / divisor;
+        string format = value >= 100 ? "0" : value >= 10 ? "0.#" : "0.##";
+        return value.ToString(format) + suffix;
     }
 
 
