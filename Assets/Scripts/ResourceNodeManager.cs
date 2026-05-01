@@ -21,10 +21,10 @@ public class ResourceNodeManager : MonoBehaviour
         //reloads nodes when swapping skills
         GameManager.Instance.OnSkillSwapped += LoadRandomUnlockedNode;
     }
-    //Called directly from click, reduces node HP and checks for completion
+    //Called directly from click, reduces node HP by the equipped tool's damage and checks for completion
     public void MainClick()
     {
-        int damage = 1;
+        int damage = ToolManager.Instance.GetCurrentDamage(GameManager.Instance.currentSkill);
         currentHP -= damage;
         if (currentHP <= 0)
         {
@@ -34,16 +34,18 @@ public class ResourceNodeManager : MonoBehaviour
     //Handles Node Completion, gives rewards and loads new node
     void CompleteNode()
     {
-        //Give Rewards
+        //Give item + coin rewards
         GameManager.Instance.AddItem(currentResource.itemID, 1);
-        //Add XP based on node type
+        GameManager.Instance.AddCoins(currentResource.sellValue);
+        //Apply armor XP multiplier, then add XP based on node type
+        int xp = Mathf.RoundToInt(currentResource.xpReward * ArmorManager.Instance.GetXPMultiplier());
         if (currentResource.skill == ActiveSkill.Woodcutting)
         {
-            GameManager.Instance.AddWoodcuttingXP(currentResource.xpReward);
+            LevelManager.Instance.AddWoodcuttingXP(xp);
         }
         else
         {
-            GameManager.Instance.AddMiningXP(currentResource.xpReward);
+            LevelManager.Instance.AddMiningXP(xp);
         }
         LoadRandomUnlockedNode();
     }
@@ -52,10 +54,8 @@ public class ResourceNodeManager : MonoBehaviour
     {
         ActiveSkill skill = GameManager.Instance.currentSkill;
         //Gets lvl based on skill
-        int level = skill == ActiveSkill.Woodcutting
-            ? GameManager.Instance.woodcuttingLevel
-            : GameManager.Instance.miningLevel;
-            //Filters resource list to only include nodes matching current skill and player level, then selects random node from that filtered list
+        int level = LevelManager.Instance.GetLevel(skill);
+        //Filters resource list to only include nodes matching current skill and player level, then selects random node from that filtered list
         List<ResourceData> unlockedResources = resources
             .Where(r => r.skill == skill && level >= r.requiredLevel)
             .ToList();
