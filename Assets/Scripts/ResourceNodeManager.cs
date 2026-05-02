@@ -4,11 +4,14 @@ using System.Linq;
 
 public class ResourceNodeManager : MonoBehaviour
 {
+    public static ResourceNodeManager Instance { get; private set; }
+    void Awake() { Instance = this; }
+    public event System.Action<ResourceData> OnNodeChanged;
     ///Manages Current Node Health
     public int currentHP;
     public int maxHP;
     //Manages Current active Resource
-    private ResourceData currentResource;
+    public ResourceData currentResource;
     //List of all resources, used for determining what node to spawn on skill swap and on node completion
     private List<ResourceData> resources = new List<ResourceData>();
 
@@ -62,6 +65,7 @@ public class ResourceNodeManager : MonoBehaviour
         currentResource = unlockedResources[Random.Range(0, unlockedResources.Count)];
         maxHP = currentResource.maxHP;
         currentHP = maxHP;
+        OnNodeChanged?.Invoke(currentResource);
     }
     //Initializes the resource list with all nodes and their associated data
     void CreateResources()

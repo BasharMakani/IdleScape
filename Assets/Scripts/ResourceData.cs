@@ -1,3 +1,4 @@
+using UnityEngine;
 [System.Serializable]
 public class ResourceData
 {
@@ -10,6 +11,7 @@ public class ResourceData
     public int maxHP;
     public int xpReward;
     public int sellValue;
+    public GameObject prefab;
 
     public ResourceData(
         ItemID itemID,
