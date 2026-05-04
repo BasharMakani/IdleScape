@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 public enum ActiveSkill { Woodcutting, Mining }
+
 // Item IDs for inventory management
 public enum ItemID
 {
@@ -19,11 +20,8 @@ public enum ItemID
     RuniteOre
 }
 
-
-
 public class GameManager : MonoBehaviour
 {
-
 
     // Gamestate Trackers
     public ActiveSkill currentSkill = ActiveSkill.Woodcutting;
@@ -53,9 +51,6 @@ public class GameManager : MonoBehaviour
     {
         currentSkill = currentSkill == ActiveSkill.Woodcutting ? ActiveSkill.Mining : ActiveSkill.Woodcutting;
         OnSkillSwapped?.Invoke();
-
-        // DELETE ME ONCE CLICKER IS IMPLEMENTED
-
     }
 
     // Called when a skill objective completes (tree felled, ore mined)
@@ -73,8 +68,10 @@ public class GameManager : MonoBehaviour
         OnCoinsChanged?.Invoke();
         return true;
     }
+
     // Inventory Management
     public Dictionary<ItemID, int> inventory = new Dictionary<ItemID, int>();
+
     //Adds specific amount of an item to the inventory 
     public void AddItem(ItemID itemID, int amount)
     {

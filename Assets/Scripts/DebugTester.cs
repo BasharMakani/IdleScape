@@ -32,14 +32,14 @@ public class DebugTester : MonoBehaviour
 
         // Cheat: top up coins + levels so every purchase succeeds
         GameManager.Instance.coins = 999_999_999;
-        LevelManager.Instance.woodcuttingLevel = 99;
-        LevelManager.Instance.miningLevel = 99;
+        LevelManager.Instance.woodcuttingLevel = 50;
+        LevelManager.Instance.miningLevel = 50;
 
         // Buy everything (silently, before we subscribe to events)
         foreach (var t in ToolManager.Instance.GetAllTools()) ToolManager.Instance.BuyTool(t);
         foreach (var a in ArmorManager.Instance.GetAllArmors()) ArmorManager.Instance.BuyArmor(a);
 
-        // Auto-log whenever something changes — much easier than remembering to query state
+        // Auto-log whenever something changes ï¿½ much easier than remembering to query state
         GameManager.Instance.OnCoinsChanged += () =>
             Debug.Log($"[Coins] {GameManager.Instance.coins}");
         GameManager.Instance.OnInventoryChanged += LogInventoryDelta;

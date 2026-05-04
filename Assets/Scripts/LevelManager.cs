@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
     public int woodcuttingXP = 0;
     public int miningXP = 0;
 
+    public int xpToLevelMult = 50;
+
     public event System.Action OnXPChanged;
 
     void Awake()
@@ -48,8 +50,8 @@ public class LevelManager : MonoBehaviour
     }
 
     // XP required to reach next level
-    int GetXPToNextLevel(int level)
+    public int GetXPToNextLevel(int level)
     {
-        return level * 50;
+        return level * xpToLevelMult;
     }
 }
