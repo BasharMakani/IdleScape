@@ -774,6 +774,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 228957983}
   m_CullTransparentMesh: 1
+--- !u!114 &280180903 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8888223028167481890, guid: 2346a500f1596494483927ff6eee5505, type: 3}
+  m_PrefabInstance: {fileID: 31556706}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &293853203
 GameObject:
   m_ObjectHideFlags: 0
@@ -4005,7 +4016,7 @@ MonoBehaviour:
   miningLevelText: {fileID: 1555594339}
   woodcuttingSlider: {fileID: 1290969534}
   miningSlider: {fileID: 212910343}
-  shopCoinText: {fileID: 0}
+  shopCoinText: {fileID: 280180903}
   gameManager: {fileID: 2019769422}
 --- !u!4 &1741963978
 Transform:
