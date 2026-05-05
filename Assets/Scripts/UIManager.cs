@@ -29,6 +29,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider woodcuttingSlider;
     [SerializeField] private Slider miningSlider;
 
+    // Shop panel fields
+    [SerializeField] private TMP_Text shopCoinText;
+
     // Script references
     [SerializeField] private GameManager gameManager;
     private LevelManager levelManager;
@@ -106,6 +109,7 @@ public class UIManager : MonoBehaviour
         else                                coinDisplay = coins.ToString();
         
         coinText.text = coinDisplay;
+        shopCoinText.text = coinDisplay;
     }
 
     // Helper method for extracting exactly 3 digits for coin display

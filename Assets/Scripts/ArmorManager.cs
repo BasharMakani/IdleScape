@@ -9,7 +9,7 @@ public class ArmorManager : MonoBehaviour
     private List<ArmorData> armors = new List<ArmorData>();
     // Armors the player has purchased (keyed by armorName)
     private HashSet<string> ownedArmors = new HashSet<string>();
-    // Single equipped armor slot (universal — boost applies to both skills)
+    // Single equipped armor slot (universal ï¿½ boost applies to both skills)
     private ArmorData equippedArmor;
 
     public event System.Action OnArmorChanged;
