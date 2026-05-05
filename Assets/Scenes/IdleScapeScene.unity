@@ -4478,6 +4478,7 @@ MonoBehaviour:
   miningLevelText: {fileID: 1555594339}
   woodcuttingSlider: {fileID: 1290969534}
   miningSlider: {fileID: 212910343}
+  shopCoinText: {fileID: 0}
   gameManager: {fileID: 2019769422}
 --- !u!4 &1741963978
 Transform:
@@ -5875,10 +5876,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2761322635662839538, guid: 7c8e473c3b5f87e469c164a6019d753e, type: 3}
-      propertyPath: m_Name
-      value: Terrain
-      objectReference: {fileID: 0}
     - target: {fileID: 4354952694521758493, guid: 7c8e473c3b5f87e469c164a6019d753e, type: 3}
       propertyPath: m_Name
       value: WoodcuttingTerrain
