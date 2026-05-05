@@ -1,0 +1,304 @@
+fileFormatVersion: 2
+guid: 643b20fcb52aeac45869fbb84c3b9ba6
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|ArmatureAction
+      takeName: Armature|ArmatureAction
+      internalID: 4781951162920444690
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Old AxeAction
+      takeName: Armature|Old AxeAction
+      internalID: -6452302859241249333
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Old Axe|Old AxeAction
+      takeName: Old Axe|Old AxeAction
+      internalID: 9016747823036670847
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 0
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: AdamWoodChopClean(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Armature
+      parentName: AdamWoodChopClean(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Pelvis
+      parentName: Armature
+      position: {x: 0.0000008366257, y: -0.0005830532, z: 0.005471369}
+      rotation: {x: 0.72145396, y: 0.0018771485, z: 0.0016375805, w: 0.692458}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Spine1
+      parentName: Pelvis
+      position: {x: 2.7648639e-11, y: 0.0013959766, z: 3.7252902e-11}
+      rotation: {x: -0.14087756, y: 0.000000026421711, z: 0.000000015246973, w: 0.990027}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1.0000001}
+    - name: Spine2
+      parentName: Spine1
+      position: {x: -6.984919e-12, y: 0.0019942569, z: 1.44355e-10}
+      rotation: {x: 0.18140478, y: 0.00000007276814, z: 2.2148508e-10, w: 0.9834086}
+      scale: {x: 1.0000004, y: 0.99999994, z: 1.0000001}
+    - name: Head
+      parentName: Spine2
+      position: {x: -1.8626451e-11, y: 0.00215251, z: -3.72529e-10}
+      rotation: {x: -0.07190993, y: 0.000000042680597, z: -0.000000007638488, w: 0.9974112}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000005}
+    - name: Shoulder.L
+      parentName: Spine2
+      position: {x: -0.00072600646, y: 0.0020500487, z: -0.000061187726}
+      rotation: {x: -0.047543302, y: 0.066500865, z: 0.81145924, w: 0.5786633}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: UpperArm.L
+      parentName: Shoulder.L
+      position: {x: -1.6298145e-11, y: 0.0015152466, z: 6.519258e-11}
+      rotation: {x: -0.0077087022, y: -0.007089842, z: -0.13399936, w: 0.99092615}
+      scale: {x: 1.0000006, y: 1.0000008, z: 1.0000004}
+    - name: LowerArm.L
+      parentName: UpperArm.L
+      position: {x: 5.2154064e-10, y: 0.0023989973, z: 2.9802322e-10}
+      rotation: {x: 0.028613925, y: 0.0010830014, z: -0.0013433236, w: 0.99958915}
+      scale: {x: 1, y: 0.9999998, z: 1.0000007}
+    - name: Hand.L
+      parentName: LowerArm.L
+      position: {x: -2.6077032e-10, y: 0.002676142, z: 4.0978193e-10}
+      rotation: {x: -0.029396977, y: 0.0007364711, z: 0.025031732, w: 0.99925405}
+      scale: {x: 1.0000001, y: 1.0000001, z: 0.99999976}
+    - name: Shoulder.R
+      parentName: Spine2
+      position: {x: 0.0007240292, y: 0.0014677198, z: 0.000054226257}
+      rotation: {x: 0.04742655, y: 0.06666856, z: 0.81142426, w: -0.5787027}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000004}
+    - name: UpperArm.R
+      parentName: Shoulder.R
+      position: {x: 2.0489097e-10, y: 0.0015152469, z: 0}
+      rotation: {x: -0.0034372164, y: 0.006809256, z: 0.13415934, w: 0.9909305}
+      scale: {x: 1.0000002, y: 1.0000008, z: 1.0000007}
+    - name: LowerArm.R
+      parentName: UpperArm.R
+      position: {x: 5.2154064e-10, y: 0.002398997, z: 4.4703483e-10}
+      rotation: {x: 0.02914269, y: -0.0010879786, z: 0.0010850432, w: 0.99957407}
+      scale: {x: 1.0000004, y: 0.99999994, z: 0.99999994}
+    - name: Hand.R
+      parentName: LowerArm.R
+      position: {x: 2.2351741e-10, y: 0.0026761414, z: -1.4901161e-10}
+      rotation: {x: -0.02939703, y: -0.0007363773, z: -0.025031574, w: 0.9992541}
+      scale: {x: 1.0000002, y: 1, z: 1.0000002}
+    - name: UpperLeg.L
+      parentName: Pelvis
+      position: {x: -0.001450996, y: 0.0003803157, z: -0.00020238334}
+      rotation: {x: 0.00000019189815, y: 0.12192807, z: 0.9925389, w: 0.000000018370548}
+      scale: {x: 1, y: 0.99999964, z: 1.0000042}
+    - name: LowerLeg.L
+      parentName: UpperLeg.L
+      position: {x: -8.381903e-11, y: 0.0026321916, z: 2.7474015e-10}
+      rotation: {x: -0.18800038, y: 0.000000023613666, z: 0.000000053503214, w: 0.98216903}
+      scale: {x: 1.0000001, y: 1.0000017, z: 1.0000008}
+    - name: Foot.L
+      parentName: LowerLeg.L
+      position: {x: -1.5832484e-10, y: 0.002706584, z: -5.937181e-11}
+      rotation: {x: -0.6745408, y: -0.000000027267863, z: 0.00000010315847, w: -0.73823756}
+      scale: {x: 0.99999994, y: 1.0000033, z: 0.9999996}
+    - name: UpperLeg.R
+      parentName: Pelvis
+      position: {x: 0.0014509963, y: 0.000380316, z: -0.0002023838}
+      rotation: {x: -0.00000007293036, y: 0.12192807, z: 0.9925389, w: -0.0000000027250382}
+      scale: {x: 1.0000001, y: 1.0000004, z: 1.0000044}
+    - name: LowerLeg.R
+      parentName: UpperLeg.R
+      position: {x: -4.6566126e-11, y: 0.0026321926, z: 4.1909514e-11}
+      rotation: {x: -0.1880003, y: -0.000000044861668, z: -0.000000023924196, w: 0.982169}
+      scale: {x: 0.99999976, y: 1.0000007, z: 1.0000005}
+    - name: Foot.R
+      parentName: LowerLeg.R
+      position: {x: -0, y: 0.0027065834, z: -3.7252902e-11}
+      rotation: {x: -0.6745408, y: 0.0000000323745, z: -0.00000010742844, w: -0.7382376}
+      scale: {x: 1.0000007, y: 1.0000004, z: 1.0000015}
+    - name: Old Axe
+      parentName: AdamWoodChopClean(Clone)
+      position: {x: -0.33937582, y: 0.70658416, z: 0.13395552}
+      rotation: {x: 0.35615757, y: 0.50819176, z: 0.18322553, w: 0.7624443}
+      scale: {x: 0.028544247, y: 0.2788986, z: 0.028544245}
+    - name: _Template
+      parentName: AdamWoodChopClean(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 0
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
