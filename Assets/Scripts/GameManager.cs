@@ -11,13 +11,7 @@ public enum ItemID
     OakWood,
     WillowWood,
     MapleWood,
-    MagicWood,
-
-    CopperOre,
-    IronOre,
-    GoldOre,
-    MithrilOre,
-    RuniteOre
+    MagicWood
 }
 
 public class GameManager : MonoBehaviour
@@ -49,7 +43,7 @@ public class GameManager : MonoBehaviour
     // Called directly from skill swap button, invokes UI manager flag
     public void SwapSkill()
     {
-        currentSkill = currentSkill == ActiveSkill.Woodcutting ? ActiveSkill.Mining : ActiveSkill.Woodcutting;
+        currentSkill = currentSkill == ActiveSkill.Woodcutting ? ActiveSkill.Woodcutting : ActiveSkill.Woodcutting;
         OnSkillSwapped?.Invoke();
     }
 

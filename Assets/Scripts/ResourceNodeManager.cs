@@ -1,47 +1,140 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 public class ResourceNodeManager : MonoBehaviour
 {
     public static ResourceNodeManager Instance { get; private set; }
-    void Awake() { Instance = this; }
-    public event System.Action<ResourceData> OnNodeChanged;
-    ///Manages Current Node Health
+
+    // Manages current node health
     public int currentHP;
     public int maxHP;
-    //Manages Current active Resource
-    public ResourceData currentResource;
-    //List of all resources, used for determining what node to spawn on skill swap and on node completion
+
+    // Manages current active resource
+    public ResourceData currentResource { get; private set; }
+
+    // Tells ResourceNodeVisual when the node changes
+    public event System.Action<ResourceData> OnNodeChanged;
+
+    // List of all resources, used for determining what node to spawn
     private List<ResourceData> resources = new List<ResourceData>();
+
+    // Drag your SpawnPoint Transform here
+    [SerializeField] private Transform spawnPoint;
+
+    // Seconds to wait after triggering the fall animation before respawning the next node
+    [SerializeField] private float fellDuration = 1.5f;
+
+    // True while the felling sequence is playing
+    private bool isFelling = false;
+
+    // Fired when the player taps to swing
+    public event System.Action OnChopStarted;
+
+    // Fired when the axe blade actually contacts the node
+    public event System.Action OnTreeStruck;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
-        //Initialize Resource List and Load Starting Node
         CreateResources();
-        //Load Starting Node
         LoadRandomUnlockedNode();
-        //reloads nodes when swapping skills
+
         GameManager.Instance.OnSkillSwapped += LoadRandomUnlockedNode;
     }
-    //Called directly from click, reduces node HP by the equipped tool's damage and checks for completion
-    public void MainClick()
+
+    void OnDestroy()
     {
-        int damage = ToolManager.Instance.GetCurrentDamage(GameManager.Instance.currentSkill);
-        currentHP -= damage;
-        if (currentHP <= 0)
+        if (GameManager.Instance != null)
         {
-            CompleteNode();
+            GameManager.Instance.OnSkillSwapped -= LoadRandomUnlockedNode;
         }
     }
-    //Handles Node Completion, gives rewards and loads new node
+
+    private TreeNode GetCurrentNodeVisual()
+    {
+        if (spawnPoint == null)
+        {
+            return null;
+        }
+
+        return spawnPoint.GetComponentInChildren<TreeNode>();
+    }
+
+    public void MainClick()
+    {
+        if (isFelling) return;
+
+        OnChopStarted?.Invoke();
+    }
+
+    public void ApplyHit()
+    {
+        Debug.Log("ResourceNodeManager: ApplyHit called.");
+
+        if (isFelling)
+        {
+            Debug.Log("ResourceNodeManager: Hit ignored because tree is already felling.");
+            return;
+        }
+
+        int damage = ToolManager.Instance.GetCurrentDamage(GameManager.Instance.currentSkill);
+
+        Debug.Log("ResourceNodeManager: Damage = " + damage);
+        Debug.Log("ResourceNodeManager: HP before hit = " + currentHP);
+
+        currentHP -= damage;
+
+        Debug.Log("ResourceNodeManager: HP after hit = " + currentHP);
+
+        OnTreeStruck?.Invoke();
+
+        if (currentHP <= 0)
+        {
+            Debug.Log("ResourceNodeManager: HP reached 0. Starting FellSequence.");
+            StartCoroutine(FellSequence());
+        }
+    }
+
+    IEnumerator FellSequence()
+    {
+        Debug.Log("ResourceNodeManager: FellSequence started.");
+
+        isFelling = true;
+
+        TreeNode node = GetCurrentNodeVisual();
+
+        if (node != null)
+        {
+            Debug.Log("ResourceNodeManager: TreeNode found. Calling PlayFall.");
+            node.PlayFall();
+        }
+        else
+        {
+            Debug.LogWarning("ResourceNodeManager: No TreeNode found under spawnPoint.");
+        }
+
+        yield return new WaitForSeconds(fellDuration);
+
+        Debug.Log("ResourceNodeManager: Fell wait finished. Completing node.");
+
+        CompleteNode();
+
+        isFelling = false;
+    }
+
     void CompleteNode()
     {
-        //Give item + coin rewards
         GameManager.Instance.AddItem(currentResource.itemID, 1);
         GameManager.Instance.AddCoins(currentResource.sellValue);
-        //Apply armor XP multiplier, then add XP based on node type
+
         int xp = Mathf.RoundToInt(currentResource.xpReward * ArmorManager.Instance.GetXPMultiplier());
+
         if (currentResource.skill == ActiveSkill.Woodcutting)
         {
             LevelManager.Instance.AddWoodcuttingXP(xp);
@@ -50,36 +143,35 @@ public class ResourceNodeManager : MonoBehaviour
         {
             LevelManager.Instance.AddMiningXP(xp);
         }
+
         LoadRandomUnlockedNode();
     }
-    //Loads a random node from the list of resources that the player is currently high enough level to access, based on their current active skill
+
     void LoadRandomUnlockedNode()
     {
         ActiveSkill skill = GameManager.Instance.currentSkill;
-        //Gets lvl based on skill
+
         int level = LevelManager.Instance.GetLevel(skill);
-        //Filters resource list to only include nodes matching current skill and player level, then selects random node from that filtered list
+
         List<ResourceData> unlockedResources = resources
             .Where(r => r.skill == skill && level >= r.requiredLevel)
             .ToList();
+
         currentResource = unlockedResources[Random.Range(0, unlockedResources.Count)];
+
         maxHP = currentResource.maxHP;
         currentHP = maxHP;
+
         OnNodeChanged?.Invoke(currentResource);
     }
-    //Initializes the resource list with all nodes and their associated data
+
     void CreateResources()
     {
         resources.Clear();
-        resources.Add(new ResourceData(ItemID.NormalWood, "Normal Tree", ActiveSkill.Woodcutting, 1, 1, 5, 5, 1));
-        resources.Add(new ResourceData(ItemID.OakWood, "Oak Tree", ActiveSkill.Woodcutting, 2, 20, 15, 20, 5));
-        resources.Add(new ResourceData(ItemID.WillowWood, "Willow Tree", ActiveSkill.Woodcutting, 3, 40, 35, 60, 15));
-        resources.Add(new ResourceData(ItemID.MapleWood, "Maple Tree", ActiveSkill.Woodcutting, 4, 60, 75, 150, 40));
-        resources.Add(new ResourceData(ItemID.MagicWood, "Magic Tree", ActiveSkill.Woodcutting, 5, 80, 150, 400, 100));
-        resources.Add(new ResourceData(ItemID.CopperOre, "Copper Rock", ActiveSkill.Mining, 1, 1, 5, 5, 1));
-        resources.Add(new ResourceData(ItemID.IronOre, "Iron Rock", ActiveSkill.Mining, 2, 20, 15, 20, 5));
-        resources.Add(new ResourceData(ItemID.GoldOre, "Gold Rock", ActiveSkill.Mining, 3, 40, 35, 60, 15));
-        resources.Add(new ResourceData(ItemID.MithrilOre, "Mithril Rock", ActiveSkill.Mining, 4, 60, 75, 150, 40));
-        resources.Add(new ResourceData(ItemID.RuniteOre, "Runite Rock", ActiveSkill.Mining, 5, 80, 150, 400, 100));
+
+        resources.Add(new ResourceData(ItemID.NormalWood, "Oak Tree", ActiveSkill.Woodcutting, 1, 1, 5, 5, 1));
+        resources.Add(new ResourceData(ItemID.OakWood, "Pine Tree", ActiveSkill.Woodcutting, 2, 20, 15, 20, 5));
+        resources.Add(new ResourceData(ItemID.WillowWood, "Elm Tree", ActiveSkill.Woodcutting, 3, 40, 35, 60, 15));
+        resources.Add(new ResourceData(ItemID.MapleWood, "Aspen Tree", ActiveSkill.Woodcutting, 4, 60, 75, 150, 40));
     }
 }

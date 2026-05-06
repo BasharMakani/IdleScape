@@ -12,7 +12,6 @@ public class ToolManager : MonoBehaviour
     private HashSet<string> ownedTools = new HashSet<string>();
     // Currently equipped tool per type
     private ToolData equippedAxe;
-    private ToolData equippedPickaxe;
 
     public event System.Action OnToolChanged;
 
@@ -26,11 +25,8 @@ public class ToolManager : MonoBehaviour
         CreateTools();
         // Player starts with the tier 1 tools equipped (cost 0)
         ToolData starterAxe = GetTool("Bronze Axe");
-        ToolData starterPickaxe = GetTool("Bronze Pickaxe");
         BuyTool(starterAxe);
-        BuyTool(starterPickaxe);
         EquipTool(starterAxe);
-        EquipTool(starterPickaxe);
     }
 
     // Initializes the tool list with every tool tier for both skills
@@ -42,12 +38,6 @@ public class ToolManager : MonoBehaviour
         tools.Add(new ToolData("Steel Axe", ToolType.Axe, 3, 20, 500, 4));
         tools.Add(new ToolData("Mithril Axe", ToolType.Axe, 4, 40, 5000, 8));
         tools.Add(new ToolData("Rune Axe", ToolType.Axe, 5, 60, 50000, 16));
-
-        tools.Add(new ToolData("Bronze Pickaxe", ToolType.Pickaxe, 1, 1, 0, 1));
-        tools.Add(new ToolData("Iron Pickaxe", ToolType.Pickaxe, 2, 5, 50, 2));
-        tools.Add(new ToolData("Steel Pickaxe", ToolType.Pickaxe, 3, 20, 500, 4));
-        tools.Add(new ToolData("Mithril Pickaxe", ToolType.Pickaxe, 4, 40, 5000, 8));
-        tools.Add(new ToolData("Rune Pickaxe", ToolType.Pickaxe, 5, 60, 50000, 16));
     }
 
     // Lookup helpers
@@ -78,19 +68,18 @@ public class ToolManager : MonoBehaviour
     {
         if (!IsOwned(tool)) return;
         if (tool.type == ToolType.Axe) equippedAxe = tool;
-        else equippedPickaxe = tool;
         OnToolChanged?.Invoke();
     }
 
     public ToolData GetEquipped(ToolType type)
     {
-        return type == ToolType.Axe ? equippedAxe : equippedPickaxe;
+        return type == ToolType.Axe ? equippedAxe : equippedAxe;
     }
 
     // Returns the damage of the tool currently equipped for the given skill (defaults to 1 if none)
     public int GetCurrentDamage(ActiveSkill skill)
     {
-        ToolData tool = skill == ActiveSkill.Woodcutting ? equippedAxe : equippedPickaxe;
+        ToolData tool = skill == ActiveSkill.Woodcutting ? equippedAxe : equippedAxe;
         return tool != null ? tool.damage : 1;
     }
 
