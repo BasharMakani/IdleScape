@@ -1,36 +1,55 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+
+public enum Gender { Man, Woman }
 
 public class UIManager : MonoBehaviour
 {
-    // Primary Panels
+    [Header("Primary Panels")]
     [SerializeField] private GameObject mainPanel;
     [SerializeField] private GameObject shopPanel;
     [SerializeField] private GameObject equipPanel;
 
-    // Swap-Skill Button Icon Fields
+    [Header("Swap Skill Assets")]
     [SerializeField] Image currentSkillIcon;
     [SerializeField] Image otherSkillIcon;
     [SerializeField] Sprite woodcuttingSprite;
     [SerializeField] Sprite miningSprite;
 
-    // Audio
-    private AudioSource audioSource;
+    [Header("Audio Files")] 
     [SerializeField] private AudioClip click;
     [SerializeField] private AudioClip clickConfirm;
     [SerializeField] private AudioClip inventory1;
     [SerializeField] private AudioClip inventory2;
+    private AudioSource audioSource;
 
-    // Top Container Trackers (coins, xp)
+    [Header("Top Container Fields")]
     [SerializeField] private TMP_Text coinText;
     [SerializeField] private TMP_Text woodcuttingLevelText;
     [SerializeField] private TMP_Text miningLevelText;
     [SerializeField] private Slider woodcuttingSlider;
     [SerializeField] private Slider miningSlider;
 
-    // Shop panel fields
+    [Header("Shop")]
     [SerializeField] private TMP_Text shopCoinText;
+
+    [Header("Gender")]
+    [SerializeField] private GameObject selectedGenderSymbol;
+    public Gender currentGender;
+    private const float SelectSymbolManX = -100f;
+    private const float SelectSymbolWomanX = 500f;
+    public event Action OnGenderChanged;
+    
+    
+    [Header("Vanity")]
+    [SerializeField] private Image vanityImage;
+    [SerializeField] private TMP_Text vanityNameText;
+    private VanityOption[] unlockedOptions;
+    private int vanityIndex = 0;
+    
+
 
     // Script references
     [SerializeField] private GameManager gameManager;
@@ -45,7 +64,9 @@ public class UIManager : MonoBehaviour
     {
         ShowPanel(mainPanel);
         levelManager = gameManager.GetComponent<LevelManager>();
-        
+
+        currentGender = Gender.Man; // Default is man
+        vanityIndex = 0; // Default is no vanity
 
         // Initialize manager flags
         GameManager.Instance.OnSkillSwapped += UpdateSkillIcons;
@@ -73,6 +94,9 @@ public class UIManager : MonoBehaviour
 
     public void OnEquipButtonClicked(){
         audioSource.PlayOneShot(inventory1);
+        unlockedOptions = System.Array.FindAll(GameManager.Instance.vanityOptions, o => o.isPurchased);
+        vanityIndex = 0;
+        RefreshVanityDisplay();
         ShowPanel(equipPanel);
     }
 
@@ -136,5 +160,49 @@ public class UIManager : MonoBehaviour
         audioSource.PlayOneShot(inventory2);
         ShowPanel(mainPanel);
     }
+
+    /* EQUIP PAGE */
+
+    // Changes current gender and sets check mark position to corresponding image, invokes genderChanged?
+    public void OnManButtonClicked(){
+        if (currentGender != Gender.Man) audioSource.PlayOneShot(click);
+        currentGender = Gender.Man;
+        RectTransform rt = selectedGenderSymbol.GetComponent<RectTransform>();
+        rt.anchoredPosition = new Vector2(SelectSymbolManX, rt.anchoredPosition.y);
+        OnGenderChanged?.Invoke();
+    }
+    public void OnWomanButtonClicked(){
+        if (currentGender != Gender.Woman) audioSource.PlayOneShot(click);
+        currentGender = Gender.Woman;
+        RectTransform rt = selectedGenderSymbol.GetComponent<RectTransform>();
+        rt.anchoredPosition = new Vector2(SelectSymbolWomanX, rt.anchoredPosition.y);
+        OnGenderChanged?.Invoke();
+    }
+
+
+    // Vanity Control Methods
+    public void OnVanityLeftClicked() {
+        audioSource.PlayOneShot(click);
+        vanityIndex = (vanityIndex - 1 + unlockedOptions.Length) % unlockedOptions.Length;
+        RefreshVanityDisplay();
+    }
+
+    public void OnVanityRightClicked() {
+        audioSource.PlayOneShot(click);
+        vanityIndex = (vanityIndex + 1) % unlockedOptions.Length;
+        RefreshVanityDisplay();
+    }
+
+    void RefreshVanityDisplay() {
+        VanityOption option = unlockedOptions[vanityIndex];
+        vanityNameText.text = option.name;
+        vanityImage.sprite = option.vanitySprite;
+        GameManager.Instance.SetVanity(option.id);
+    }
+
+
+
+
+
 
 }

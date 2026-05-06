@@ -21,6 +21,12 @@ public class GameManager : MonoBehaviour
     public ActiveSkill currentSkill = ActiveSkill.Woodcutting;
     public long coins = 0;
 
+    // Vanity Trackers
+    public int currentVanityId = 0; // Default is no helmet/hat
+    public VanityOption[] vanityOptions;
+    public event System.Action<int> OnVanityChanged;
+
+
     public event System.Action OnInventoryChanged;
 
     // Listeners for invoking UIManager methods
@@ -88,4 +94,18 @@ public class GameManager : MonoBehaviour
         return inventory[itemID];
     }
 
+    // Called from RefreshVanityDisplay from UiManager
+    public void SetVanity(int id) {
+        currentVanityId = id;
+        OnVanityChanged?.Invoke(id);
+    }
+
+}
+
+[System.Serializable]
+public class VanityOption {
+    public string name;
+    public int id;
+    public bool isPurchased;
+    public Sprite vanitySprite;
 }
