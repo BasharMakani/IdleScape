@@ -117,7 +117,11 @@ public class Upgrade {
 public class VanityOption {
     public string name;
     public int id;
+    public long cost;
     public bool isPurchased;
     public Sprite vanitySprite;
+    public GameObject prefab;
+    public Vector3 positionOffset;
+    public Vector3 rotationOffset;
 }
 
