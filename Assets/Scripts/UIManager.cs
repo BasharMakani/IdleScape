@@ -12,12 +12,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject shopPanel;
     [SerializeField] private GameObject equipPanel;
 
-    [Header("Swap Skill Assets")]
-    [SerializeField] Image currentSkillIcon;
-    [SerializeField] Image otherSkillIcon;
-    [SerializeField] Sprite woodcuttingSprite;
-    [SerializeField] Sprite miningSprite;
-
     [Header("Audio Files")] 
     [SerializeField] private AudioClip click;
     [SerializeField] private AudioClip clickConfirm;
@@ -28,9 +22,7 @@ public class UIManager : MonoBehaviour
     [Header("Top Container Fields")]
     [SerializeField] private TMP_Text coinText;
     [SerializeField] private TMP_Text woodcuttingLevelText;
-    [SerializeField] private TMP_Text miningLevelText;
     [SerializeField] private Slider woodcuttingSlider;
-    [SerializeField] private Slider miningSlider;
 
     [Header("Shop")]
     [SerializeField] private TMP_Text shopCoinText;
@@ -69,8 +61,6 @@ public class UIManager : MonoBehaviour
         vanityIndex = 0; // Default is no vanity
 
         // Initialize manager flags
-        GameManager.Instance.OnSkillSwapped += UpdateSkillIcons;
-        RefreshSkillIcons();
 
         GameManager.Instance.OnCoinsChanged += UpdateCoinDisplay;
         UpdateCoinDisplay();
@@ -98,24 +88,6 @@ public class UIManager : MonoBehaviour
         vanityIndex = 0;
         RefreshVanityDisplay();
         ShowPanel(equipPanel);
-    }
-
-    // Called from GameManager when skill swap button pressed
-    void UpdateSkillIcons()
-    {
-        levelManager.AddWoodcuttingXP(8); // DELETE ME ONCE IMPLEMENTED
-        levelManager.AddMiningXP(5); // DELETE ME ONCE IMPLEMENTED
-        gameManager.AddCoins(100); // DELETE ME ONCE IMPLEMENTED
-        
-        audioSource.PlayOneShot(clickConfirm);
-        RefreshSkillIcons();
-    }
-
-    void RefreshSkillIcons()
-    {
-        ActiveSkill current = GameManager.Instance.currentSkill;
-        currentSkillIcon.sprite = current == ActiveSkill.Woodcutting ? woodcuttingSprite : miningSprite;
-        otherSkillIcon.sprite = current == ActiveSkill.Woodcutting ? miningSprite : woodcuttingSprite;
     }
 
     // Called from GameManager when coin count increments
@@ -148,10 +120,8 @@ public class UIManager : MonoBehaviour
     void UpdateXPDisplay()
     {
         woodcuttingLevelText.text = "LVL " + levelManager.woodcuttingLevel;
-        miningLevelText.text = "LVL " + levelManager.miningLevel;
 
         woodcuttingSlider.value = (float)levelManager.woodcuttingXP / levelManager.GetXPToNextLevel(levelManager.woodcuttingLevel);
-        miningSlider.value = (float)levelManager.miningXP / levelManager.GetXPToNextLevel(levelManager.miningLevel);
     }
 
 
@@ -162,7 +132,6 @@ public class UIManager : MonoBehaviour
     }
 
     /* EQUIP PAGE */
-
     // Changes current gender and sets check mark position to corresponding image, invokes genderChanged?
     public void OnManButtonClicked(){
         if (currentGender != Gender.Man) audioSource.PlayOneShot(click);
