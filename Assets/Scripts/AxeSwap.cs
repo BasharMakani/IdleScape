@@ -39,6 +39,7 @@ public class AxeSwap : MonoBehaviour
         currentAxe = Instantiate(prefab);
         currentAxe.transform.SetParent(axeBone, true);
         currentAxe.transform.localPosition = axeOffset;
+        currentAxe.transform.localRotation = Quaternion.identity;
         characterAnimator.toolCollider = currentAxe.GetComponent<ToolCollider>();
     }
 }
