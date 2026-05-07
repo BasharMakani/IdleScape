@@ -22,8 +22,8 @@ public class TreeNode : MonoBehaviour
             Debug.Log("TreeNode: Animator found on " + gameObject.name);
         }
         
-    if (animator != null)
-        animator.ResetTrigger(fallTrigger);
+        if (animator != null)
+         animator.ResetTrigger(fallTrigger);
     }
 
     public void PlayFall()
