@@ -340,17 +340,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2346a500f1596494483927ff6eee5505, type: 3}
---- !u!114 &92614229 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 50695186225772408, guid: 2346a500f1596494483927ff6eee5505, type: 3}
-  m_PrefabInstance: {fileID: 31556706}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &153504899 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 256838649255558904, guid: 2346a500f1596494483927ff6eee5505, type: 3}
@@ -1025,9 +1014,6 @@ MonoBehaviour:
   - {fileID: 730293336}
   - {fileID: 1855927970}
   - {fileID: 1624922166}
-  - {fileID: 1973072709}
-  - {fileID: 2036747185}
-  - {fileID: 92614229}
   gameManager: {fileID: 2019769422}
 --- !u!4 &1741963978
 Transform:
@@ -1363,17 +1349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1973072709 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3383053390662302849, guid: 2346a500f1596494483927ff6eee5505, type: 3}
-  m_PrefabInstance: {fileID: 31556706}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2019769421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,33 +1408,9 @@ MonoBehaviour:
     prefab: {fileID: 919132149155446097, guid: 94d06f38b8626d5429a30fd7d105e6c5, type: 3}
     positionOffset: {x: 0, y: 0.00334, z: 0.00054}
     rotationOffset: {x: 0, y: 0, z: 0}
-  - name: TBA
+  - name: Gladiator Helmet
     id: 3
     cost: 50000
-    isPurchased: 0
-    vanitySprite: {fileID: 21300000, guid: 4716ae6fc33b5b2449a0653beeacae28, type: 3}
-    prefab: {fileID: 0}
-    positionOffset: {x: -0.00001, y: -0.00019, z: 0.00136}
-    rotationOffset: {x: 0, y: 0, z: 0}
-  - name: TBA
-    id: 4
-    cost: 100000
-    isPurchased: 0
-    vanitySprite: {fileID: 21300000, guid: 4716ae6fc33b5b2449a0653beeacae28, type: 3}
-    prefab: {fileID: 0}
-    positionOffset: {x: -0.00001, y: -0.00019, z: 0.00136}
-    rotationOffset: {x: 0, y: 0, z: 0}
-  - name: TBA
-    id: 5
-    cost: 500000
-    isPurchased: 0
-    vanitySprite: {fileID: 21300000, guid: 4716ae6fc33b5b2449a0653beeacae28, type: 3}
-    prefab: {fileID: 0}
-    positionOffset: {x: -0.00001, y: -0.00019, z: 0.00136}
-    rotationOffset: {x: 0, y: 0, z: 0}
-  - name: Gladiator Helmet
-    id: 6
-    cost: 2000000
     isPurchased: 0
     vanitySprite: {fileID: 21300000, guid: 3cdf5d1ba05554d4e91f984a81add9bd, type: 3}
     prefab: {fileID: 919132149155446097, guid: 09cd19ad45b0cbd4599f630da4e48349, type: 3}
@@ -1639,17 +1590,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2036747185 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8023435724578896023, guid: 2346a500f1596494483927ff6eee5505, type: 3}
-  m_PrefabInstance: {fileID: 31556706}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2068831031 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4381251426075927430, guid: f63d9afe0f4e1374aa6bf4e3df8241dd, type: 3}
