@@ -26,11 +26,13 @@ public class GameManager : MonoBehaviour
     public VanityOption[] vanityOptions;
     public event System.Action<int> OnVanityChanged;
 
+    // Upgrade Stat Trackers
+    public int damage = 0;
+    public float XPMultiplier = 1.0f;
+    public float CoinMultiplier = 1.0f; 
 
-    public event System.Action OnInventoryChanged;
 
     // Listeners for invoking UIManager methods
-    public event System.Action OnSkillSwapped;
     public event System.Action OnCoinsChanged;
 
     // Init GameManager instance
@@ -46,11 +48,16 @@ public class GameManager : MonoBehaviour
         coins = 0;
     }
 
-    // Called directly from skill swap button, invokes UI manager flag
-    public void SwapSkill()
-    {
-        currentSkill = currentSkill == ActiveSkill.Woodcutting ? ActiveSkill.Woodcutting : ActiveSkill.Woodcutting;
-        OnSkillSwapped?.Invoke();
+    public int GetDamage(){
+        return damage;
+    }
+
+    public float GetXPMultiplier(){
+        return XPMultiplier;
+    }
+
+    public float GetCoinMultiplier(){
+        return CoinMultiplier;
     }
 
     // Called when a skill objective completes (tree felled, ore mined)
@@ -69,29 +76,8 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    // Inventory Management
-    public Dictionary<ItemID, int> inventory = new Dictionary<ItemID, int>();
+    public void PurchaseUpgrade(int upgradeId){
 
-    //Adds specific amount of an item to the inventory 
-    public void AddItem(ItemID itemID, int amount)
-    {
-        if (!inventory.ContainsKey(itemID))
-        {
-            inventory[itemID] = 0;
-        }
-        inventory[itemID] += amount;
-        OnInventoryChanged?.Invoke();
-    }
-
-    //Returns amount of an item in inventory, returns 0 if item not present
-    public int GetItemAmount(ItemID itemID)
-    {
-        if (!inventory.ContainsKey(itemID))
-        {
-            return 0;
-        }
-
-        return inventory[itemID];
     }
 
     // Called from RefreshVanityDisplay from UiManager
@@ -99,6 +85,7 @@ public class GameManager : MonoBehaviour
         currentVanityId = id;
         OnVanityChanged?.Invoke(id);
     }
+
 
 }
 

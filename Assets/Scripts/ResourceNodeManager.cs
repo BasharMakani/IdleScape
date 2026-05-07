@@ -44,15 +44,13 @@ public class ResourceNodeManager : MonoBehaviour
     {
         CreateResources();
         LoadRandomUnlockedNode();
-
-        GameManager.Instance.OnSkillSwapped += LoadRandomUnlockedNode;
     }
 
     void OnDestroy()
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.OnSkillSwapped -= LoadRandomUnlockedNode;
+
         }
     }
 
@@ -83,7 +81,7 @@ public class ResourceNodeManager : MonoBehaviour
             return;
         }
 
-        int damage = ToolManager.Instance.GetCurrentDamage(GameManager.Instance.currentSkill);
+        int damage = GameManager.Instance.GetDamage();
 
         Debug.Log("ResourceNodeManager: Damage = " + damage);
         Debug.Log("ResourceNodeManager: HP before hit = " + currentHP);
@@ -130,10 +128,9 @@ public class ResourceNodeManager : MonoBehaviour
 
     void CompleteNode()
     {
-        GameManager.Instance.AddItem(currentResource.itemID, 1);
         GameManager.Instance.AddCoins(currentResource.sellValue);
 
-        int xp = Mathf.RoundToInt(currentResource.xpReward * ArmorManager.Instance.GetXPMultiplier());
+        int xp = Mathf.RoundToInt(currentResource.xpReward * GameManager.Instance.GetXPMultiplier());
 
         if (currentResource.skill == ActiveSkill.Woodcutting)
         {

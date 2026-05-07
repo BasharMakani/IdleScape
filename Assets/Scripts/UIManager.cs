@@ -76,7 +76,7 @@ public class UIManager : MonoBehaviour
         panel.SetActive(true);
     }
 
-    /* MAIN PAGE */
+    /*-------- MAIN PAGE ----------*/
     public void OnShopButtonClicked(){
         audioSource.PlayOneShot(inventory1);
         ShowPanel(shopPanel);
@@ -125,13 +125,22 @@ public class UIManager : MonoBehaviour
     }
 
 
-    /* SHOP & EQUIP PAGE */
+    /*--------- SHOP & EQUIP PAGE -----------*/
     public void OnBackButtonClicked(){
         audioSource.PlayOneShot(inventory2);
         ShowPanel(mainPanel);
     }
 
-    /* EQUIP PAGE */
+    /*--------- SHOP PAGE --------*/
+
+    public void OnShopUpgradeClicked(int upgradeId){
+        // 0 is tool,        1 is chestplate, 2 is leggings
+        // 0 is swing speed, 1 is xp yield,   2 is coin yield
+        GameManager.Instance.PurchaseUpgrade(upgradeId);
+    }
+
+
+    /*---------- EQUIP PAGE ----------*/
     // Changes current gender and sets check mark position to corresponding image, invokes genderChanged?
     public void OnManButtonClicked(){
         if (currentGender != Gender.Man) audioSource.PlayOneShot(click);
