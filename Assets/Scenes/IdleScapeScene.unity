@@ -1416,6 +1416,8 @@ MonoBehaviour:
   damage: 0
   XPMultiplier: 1
   CoinMultiplier: 1
+  bonusDamageMultiplier: 1
+  currentDamageDisplay: 0
 --- !u!4 &2019769423
 Transform:
   m_ObjectHideFlags: 0
@@ -1462,6 +1464,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHP: 0
   maxHP: 0
+  bonusIconPrefab: {fileID: 4387243402378270542, guid: f078ca3d94b3d4d4a8f36fd0351a63f8, type: 3}
+  spawnAreaMin: {x: -2, y: 3}
+  spawnAreaMax: {x: 2, y: 4}
   spawnPoint: {fileID: 1444102061}
   fellDuration: 1
 --- !u!82 &2019769429
@@ -1703,6 +1708,14 @@ PrefabInstance:
     - target: {fileID: 4354952694521758493, guid: 7c8e473c3b5f87e469c164a6019d753e, type: 3}
       propertyPath: m_Name
       value: WoodcuttingTerrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 6764572916037687333, guid: 7c8e473c3b5f87e469c164a6019d753e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6764572916037687333, guid: 7c8e473c3b5f87e469c164a6019d753e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -66.92
       objectReference: {fileID: 0}
     - target: {fileID: 7636060696283555415, guid: 7c8e473c3b5f87e469c164a6019d753e, type: 3}
       propertyPath: m_LocalPosition.x
