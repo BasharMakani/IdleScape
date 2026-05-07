@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject shopPanel;
     [SerializeField] private GameObject equipPanel;
 
-    [Header("Audio Files")] 
+    [Header("Audio Files")]
     [SerializeField] private AudioClip click;
     [SerializeField] private AudioClip clickConfirm;
     [SerializeField] private AudioClip inventory1;
@@ -36,14 +36,14 @@ public class UIManager : MonoBehaviour
     private const float SelectSymbolManX = -100f;
     private const float SelectSymbolWomanX = 500f;
     public event Action OnGenderChanged;
-    
-    
+
+
     [Header("Vanity")]
     [SerializeField] private Image vanityImage;
     [SerializeField] private TMP_Text vanityNameText;
     private VanityOption[] unlockedOptions;
     private int vanityIndex = 0;
-    
+
 
 
     // Script references
@@ -83,13 +83,13 @@ public class UIManager : MonoBehaviour
     }
 
     /*-------- MAIN PAGE ----------*/
-    public void OnShopButtonClicked(){
+    public void OnShopButtonClicked() {
         audioSource.PlayOneShot(inventory1);
         UpdateShopDisplay();
         ShowPanel(shopPanel);
     }
 
-    public void OnEquipButtonClicked(){
+    public void OnEquipButtonClicked() {
         audioSource.PlayOneShot(inventory1);
         unlockedOptions = System.Array.FindAll(GameManager.Instance.vanityOptions, o => o.isPurchased);
         RefreshVanityDisplay();
@@ -99,7 +99,7 @@ public class UIManager : MonoBehaviour
     // Called from GameManager when coin count increments
     void UpdateCoinDisplay()
     {
-        string coinDisplay = FormatValue(GameManager.Instance.coins);        
+        string coinDisplay = FormatValue(GameManager.Instance.coins);
         coinText.text = coinDisplay;
         shopCoinText.text = coinDisplay;
     }
@@ -107,13 +107,13 @@ public class UIManager : MonoBehaviour
     // Helper method for adding suffixs and truncating coin count
     string FormatValue(long value)
     {
-        if      (value < 0)                 return "INF";
+        if (value < 0) return "INF";
         else if (value >= 1000000000000000) return "INF";
-        else if (value >= 1000000000000)    return FormatCoins(value, 1000000000000f, "T");
-        else if (value >= 1000000000)       return FormatCoins(value, 1000000000f, "B");
-        else if (value >= 1000000)          return FormatCoins(value, 1000000f, "M");
-        else if (value >= 1000)             return FormatCoins(value, 1000f, "K");
-        else                                return value.ToString();
+        else if (value >= 1000000000000) return FormatCoins(value, 1000000000000f, "T");
+        else if (value >= 1000000000) return FormatCoins(value, 1000000000f, "B");
+        else if (value >= 1000000) return FormatCoins(value, 1000000f, "M");
+        else if (value >= 1000) return FormatCoins(value, 1000f, "K");
+        else return value.ToString();
     }
 
     // Helper method for extracting exactly 3 digits for coin display
@@ -125,14 +125,14 @@ public class UIManager : MonoBehaviour
     }
 
     // Called from LevelManager, updates both wood and ore XP bars/counter
-    void UpdateXPDisplay(){
+    void UpdateXPDisplay() {
         woodcuttingLevelText.text = "LVL " + levelManager.woodcuttingLevel;
         woodcuttingSlider.value = (float)levelManager.woodcuttingXP / levelManager.GetXPToNextLevel(levelManager.woodcuttingLevel);
     }
 
 
     /*--------- SHOP & EQUIP PAGE -----------*/
-    public void OnBackButtonClicked(){
+    public void OnBackButtonClicked() {
         audioSource.PlayOneShot(inventory2);
         ShowPanel(mainPanel);
     }
@@ -149,13 +149,35 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance.coins < upgrade.cost) success = false;
         if (LevelManager.Instance.GetLevel(ActiveSkill.Woodcutting) < upgrade.requiredLevel) success = false;
 
-        if (success){
+        if (success) {
             audioSource.PlayOneShot(clickConfirm);
             GameManager.Instance.PurchaseUpgrade(upgradeId);
         } else {
             audioSource.PlayOneShot(click);
         }
     }
+
+    public void OnVanityPurchaseClicked(int vanityId)
+    {
+        Debug.Log("Vanity button clicked with id: " + vanityId);
+        bool success = true;
+        VanityOption option = GameManager.Instance.vanityOptions[vanityId];
+
+        if (option.isPurchased) return;
+        if (GameManager.Instance.coins < option.cost) success = false;
+
+        if (success)
+        {
+            audioSource.PlayOneShot(clickConfirm);
+            GameManager.Instance.SpendCoins(option.cost);
+            option.isPurchased = true;
+        }
+        else
+        {
+            audioSource.PlayOneShot(click);
+        }
+    }
+
 
     // Update relavent font text and color for each button in the shop
     public void UpdateShopDisplay()
