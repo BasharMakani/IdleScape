@@ -81,7 +81,7 @@ public class ResourceNodeManager : MonoBehaviour
             return;
         }
 
-        int damage = GameManager.Instance.GetDamage();
+        int damage = (int)GameManager.Instance.GetDamage();
 
         Debug.Log("ResourceNodeManager: Damage = " + damage);
         Debug.Log("ResourceNodeManager: HP before hit = " + currentHP);
