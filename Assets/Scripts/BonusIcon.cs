@@ -1,0 +1,42 @@
+using UnityEngine;
+using System.Collections;
+
+public class BonusIcon : MonoBehaviour
+{
+    [SerializeField] private float boostMultiplier = 2f;
+    [SerializeField] private float boostDuration = 10f;
+
+    void Update()
+    {
+    Vector2 inputPos = Vector2.zero;
+    bool inputDown = false;
+
+    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+    {
+        inputPos = Input.GetTouch(0).position;
+        inputDown = true;
+    }
+    else if (Input.GetMouseButtonDown(0))
+    {
+        inputPos = Input.mousePosition;
+        inputDown = true;
+    }
+
+    if (inputDown)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(inputPos);
+        if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject == gameObject)
+        {
+            StartCoroutine(ApplyBoost());
+            Destroy(gameObject);
+        }
+    }
+    }
+
+    IEnumerator ApplyBoost()
+    {
+        GameManager.Instance.bonusDamageMultiplier = boostMultiplier;
+        yield return new WaitForSeconds(boostDuration);
+        GameManager.Instance.bonusDamageMultiplier = 1f;
+    }
+}

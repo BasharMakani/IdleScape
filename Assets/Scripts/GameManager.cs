@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
     public float CoinMultiplier = 1f; 
     private int requiredLevelIncrease = 2;
     public int toolUpgradeCount = 0;
+    public float bonusDamageMultiplier = 1f;
+    public float currentDamageDisplay;
+
 
 
     // Listeners for invoking UIManager methods
@@ -52,8 +55,13 @@ public class GameManager : MonoBehaviour
         damage = 1f; // Default is 1 damage per hit
     }
 
+void Update()
+{
+    currentDamageDisplay = GetDamage();
+}
+
     public float GetDamage(){
-        return damage;
+        return damage * bonusDamageMultiplier;
     }
 
     public float GetXPMultiplier(){

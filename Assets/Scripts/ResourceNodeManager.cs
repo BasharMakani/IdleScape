@@ -11,6 +11,12 @@ public class ResourceNodeManager : MonoBehaviour
     public int currentHP;
     public int maxHP;
 
+    // Prefabs for spawning bonus icons
+    [SerializeField] private GameObject bonusIconPrefab;
+    [SerializeField] private Vector2 spawnAreaMin = new Vector2(-2f, 3f);
+    [SerializeField] private Vector2 spawnAreaMax = new Vector2(2f, 4.5f);
+    private float bonusTimer = 30f;
+
     // Manages current active resource
     public ResourceData currentResource { get; private set; }
 
@@ -35,6 +41,9 @@ public class ResourceNodeManager : MonoBehaviour
     // Fired when the axe blade actually contacts the node
     public event System.Action OnTreeStruck;
 
+    // Fired when tree spawns or is hit
+    public event System.Action OnHealthChanged;
+
     void Awake()
     {
         Instance = this;
@@ -46,12 +55,12 @@ public class ResourceNodeManager : MonoBehaviour
         LoadRandomUnlockedNode();
     }
 
-    void OnDestroy()
-    {
-        if (GameManager.Instance != null)
-        {
+    public int GetCurrentHP(){
+        return currentHP;
+    }
 
-        }
+    public int GetMaxHP(){
+        return maxHP;
     }
 
     private TreeNode GetCurrentNodeVisual()
@@ -63,6 +72,27 @@ public class ResourceNodeManager : MonoBehaviour
 
         return spawnPoint.GetComponentInChildren<TreeNode>();
     }
+void Update()
+    {
+        bonusTimer -= Time.deltaTime;
+        if (bonusTimer <= 0f)
+        {
+            bonusTimer = 30f;
+            if (Random.value <= 0.25f)
+                SpawnBonusIcon();
+        }
+    }
+
+    void SpawnBonusIcon()
+    {
+        Vector3 pos = new Vector3(
+            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+            Random.Range(spawnAreaMin.y, spawnAreaMax.y),
+            -69f
+        );
+        Instantiate(bonusIconPrefab, pos, Quaternion.identity);
+    }
+
 
     public void MainClick()
     {
@@ -101,9 +131,12 @@ public class ResourceNodeManager : MonoBehaviour
 
         if (currentHP <= 0)
         {
+            currentHP = 0;
             Debug.Log("ResourceNodeManager: HP reached 0. Starting FellSequence.");
             StartCoroutine(FellSequence());
         }
+        
+        OnHealthChanged?.Invoke();
     }
 
     IEnumerator FellSequence()
@@ -167,15 +200,16 @@ public class ResourceNodeManager : MonoBehaviour
         currentHP = maxHP;
 
         OnNodeChanged?.Invoke(currentResource);
+        OnHealthChanged?.Invoke();
     }
 
     void CreateResources()
     {
         resources.Clear();
 
-        resources.Add(new ResourceData(ItemID.OakWood, "Oak Tree", ActiveSkill.Woodcutting, 1, 1, 5, 5000, 1000));
-        resources.Add(new ResourceData(ItemID.PineWood, "Pine Tree", ActiveSkill.Woodcutting, 2, 10, 15, 20, 5));
-        resources.Add(new ResourceData(ItemID.ElmWood, "Elm Tree", ActiveSkill.Woodcutting, 3, 40, 30, 30, 15));
-        resources.Add(new ResourceData(ItemID.AspenWood, "Aspen Tree", ActiveSkill.Woodcutting, 4, 50, 60, 150, 40));
+        resources.Add(new ResourceData(ItemID.OakWood, "Oak Tree", ActiveSkill.Woodcutting, 1, 1, 5, 10, 10));
+        resources.Add(new ResourceData(ItemID.PineWood, "Pine Tree", ActiveSkill.Woodcutting, 2, 20, 15, 50, 20));
+        resources.Add(new ResourceData(ItemID.ElmWood, "Elm Tree", ActiveSkill.Woodcutting, 3, 40, 40, 150, 500));
+        resources.Add(new ResourceData(ItemID.AspenWood, "Aspen Tree", ActiveSkill.Woodcutting, 4, 60, 60, 1000, 1000));
     }
 }
