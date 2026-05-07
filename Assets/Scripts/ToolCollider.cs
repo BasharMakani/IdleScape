@@ -4,6 +4,7 @@ public class ToolCollider : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
+        
         Debug.Log("ToolCollider: Hit " + other.gameObject.name);
 
         TreeNode treeNode = other.GetComponentInParent<TreeNode>();

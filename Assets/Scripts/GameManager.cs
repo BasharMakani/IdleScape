@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         coins = 0; // Default is 0 coins
+        damage = 1f; // Default is 1 damage per hit
     }
 
     public float GetDamage(){

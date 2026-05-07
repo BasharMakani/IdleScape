@@ -31,16 +31,16 @@ public class LevelManager : MonoBehaviour
         OnXPChanged?.Invoke();
     }
 
-    // Adds xp to mining, handles level up logic
+    //Adds xp to mining, handles level up logic
     public void AddMiningXP(int amount)
     {
         miningXP += amount;
         while (miningXP >= GetXPToNextLevel(miningLevel))
         {
-            miningXP -= GetXPToNextLevel(miningLevel);
-            miningLevel++;
+           miningXP -= GetXPToNextLevel(miningLevel);
+           miningLevel++;
         }
-        OnXPChanged?.Invoke();
+       OnXPChanged?.Invoke();
     }
 
     // Convenience accessor used by tool/armor managers to gate purchases
