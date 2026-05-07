@@ -7,11 +7,10 @@ public enum ActiveSkill { Woodcutting, Mining }
 // Item IDs for inventory management
 public enum ItemID
 {
-    NormalWood,
     OakWood,
-    WillowWood,
-    MapleWood,
-    MagicWood
+    PineWood,
+    ElmWood,
+    AspenWood
 }
 
 public class GameManager : MonoBehaviour

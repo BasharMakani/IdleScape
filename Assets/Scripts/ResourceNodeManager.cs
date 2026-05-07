@@ -66,8 +66,15 @@ public class ResourceNodeManager : MonoBehaviour
 
     public void MainClick()
     {
-        if (isFelling) return;
+        Debug.Log("ResourceNodeManager: MainClick called.");
 
+        if (isFelling)
+        {
+            Debug.Log("ResourceNodeManager: Click ignored because tree is felling.");
+            return;
+        }
+
+        Debug.Log("ResourceNodeManager: Chop event invoked.");
         OnChopStarted?.Invoke();
     }
 
@@ -166,9 +173,9 @@ public class ResourceNodeManager : MonoBehaviour
     {
         resources.Clear();
 
-        resources.Add(new ResourceData(ItemID.NormalWood, "Oak Tree", ActiveSkill.Woodcutting, 1, 1, 5, 5000, 1000));
-        resources.Add(new ResourceData(ItemID.OakWood, "Pine Tree", ActiveSkill.Woodcutting, 2, 20, 15, 20, 5));
-        resources.Add(new ResourceData(ItemID.WillowWood, "Elm Tree", ActiveSkill.Woodcutting, 3, 40, 35, 60, 15));
-        resources.Add(new ResourceData(ItemID.MapleWood, "Aspen Tree", ActiveSkill.Woodcutting, 4, 60, 75, 150, 40));
+        resources.Add(new ResourceData(ItemID.OakWood, "Oak Tree", ActiveSkill.Woodcutting, 1, 1, 5, 5000, 1000));
+        resources.Add(new ResourceData(ItemID.PineWood, "Pine Tree", ActiveSkill.Woodcutting, 2, 10, 15, 20, 5));
+        resources.Add(new ResourceData(ItemID.ElmWood, "Elm Tree", ActiveSkill.Woodcutting, 3, 40, 30, 30, 15));
+        resources.Add(new ResourceData(ItemID.AspenWood, "Aspen Tree", ActiveSkill.Woodcutting, 4, 50, 60, 150, 40));
     }
 }

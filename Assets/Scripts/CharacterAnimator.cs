@@ -1,33 +1,91 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-// Owns the chop animation entry point (Chop) and the impact-frame hook (RegisterAxeHit).
+// Detects taps anywhere on the screen, plays a tap sound,
+// triggers the character's chop animation, and controls the axe hitbox.
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 public class CharacterAnimator : MonoBehaviour
 {
-    // Trigger names defined in the Animator Controller.
-    // Add a "Mine" trigger later if you make a mining animation.
+    [Header("Animation")]
     [SerializeField] private string chopTrigger = "Chop";
 
+    [Header("Cooldown")]
+    [SerializeField, Range(0.1f, 5f)] private float chopCooldown = 1f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip tapSound;
+
+    [Header("Tool Hitbox")]
+    [SerializeField] private ToolCollider toolCollider;
+
     private Animator animator;
+    private AudioSource audioSource;
+
+    private float nextChopTime = 0f;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-    // Called by InputController when the screen is tapped.
-    // Triggers the chop animation; the actual damage is dealt later from RegisterAxeHit().
+    void Start()
+    {
+        if (toolCollider != null)
+        {
+            toolCollider.DisableHitbox();
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
+            Chop();
+        }
+    }
+
     public void Chop()
     {
-        // Currently only one animation; branch on currentSkill once mining has its own clip.
+        if (Time.time < nextChopTime)
+        {
+            return;
+        }
+
+        nextChopTime = Time.time + chopCooldown;
+
+        if (tapSound != null)
+        {
+            audioSource.PlayOneShot(tapSound);
+        }
+
         animator.SetTrigger(chopTrigger);
     }
 
-    // Hooked up as an Animation Event on the WoodChop clip at the impact frame.
-    // Fires the actual hit so HP is subtracted when the axe visually connects.
+    public void EnableAxeHitbox()
+    {
+        if (toolCollider != null)
+        {
+            toolCollider.EnableHitbox();
+        }
+    }
+
+    public void DisableAxeHitbox()
+    {
+        if (toolCollider != null)
+        {
+            toolCollider.DisableHitbox();
+        }
+    }
+
     public void RegisterAxeHit()
     {
-        if (ResourceNodeManager.Instance != null)
-            ResourceNodeManager.Instance.MainClick();
+        EnableAxeHitbox();
     }
 }
