@@ -40,15 +40,21 @@ public class CharacterAnimator : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
+    bool tapped = false;
 
-            Chop();
-        }
+    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+    {
+        Touch touch = Input.GetTouch(0);
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId)) return;
+        tapped = true;
+    }
+    else if (Input.GetMouseButtonDown(0))
+    {
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+        tapped = true;
+    }
+
+    if (tapped) Chop();
     }
 
     public void Chop()
