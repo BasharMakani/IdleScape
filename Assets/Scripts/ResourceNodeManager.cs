@@ -35,6 +35,9 @@ public class ResourceNodeManager : MonoBehaviour
     // Fired when the axe blade actually contacts the node
     public event System.Action OnTreeStruck;
 
+    // Fired when tree spawns or is hit
+    public event System.Action OnHealthChanged;
+
     void Awake()
     {
         Instance = this;
@@ -46,12 +49,12 @@ public class ResourceNodeManager : MonoBehaviour
         LoadRandomUnlockedNode();
     }
 
-    void OnDestroy()
-    {
-        if (GameManager.Instance != null)
-        {
+    public int GetCurrentHP(){
+        return currentHP;
+    }
 
-        }
+    public int GetMaxHP(){
+        return maxHP;
     }
 
     private TreeNode GetCurrentNodeVisual()
@@ -101,9 +104,12 @@ public class ResourceNodeManager : MonoBehaviour
 
         if (currentHP <= 0)
         {
+            currentHP = 0;
             Debug.Log("ResourceNodeManager: HP reached 0. Starting FellSequence.");
             StartCoroutine(FellSequence());
         }
+        
+        OnHealthChanged?.Invoke();
     }
 
     IEnumerator FellSequence()
@@ -167,6 +173,7 @@ public class ResourceNodeManager : MonoBehaviour
         currentHP = maxHP;
 
         OnNodeChanged?.Invoke(currentResource);
+        OnHealthChanged?.Invoke();
     }
 
     void CreateResources()

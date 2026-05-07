@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text coinText;
     [SerializeField] private TMP_Text woodcuttingLevelText;
     [SerializeField] private Slider woodcuttingSlider;
+    [SerializeField] private Slider treeHealthbar;
 
     [Header("Shop")]
     [SerializeField] private TMP_Text shopCoinText;
@@ -41,6 +42,7 @@ public class UIManager : MonoBehaviour
     [Header("Vanity")]
     [SerializeField] private Image vanityImage;
     [SerializeField] private TMP_Text vanityNameText;
+    [SerializeField] private TMP_Text[] vanityShopLabels;
     private VanityOption[] unlockedOptions;
     private int vanityIndex = 0;
 
@@ -73,6 +75,10 @@ public class UIManager : MonoBehaviour
 
         LevelManager.Instance.OnXPChanged += UpdateXPDisplay;
         UpdateXPDisplay();
+
+        ResourceNodeManager.Instance.OnHealthChanged += UpdateTreeHealthbar;
+        UpdateTreeHealthbar();
+        treeHealthbar.value = 0.5f;
     }
 
     void ShowPanel(GameObject panel) {
@@ -94,6 +100,8 @@ public class UIManager : MonoBehaviour
         unlockedOptions = System.Array.FindAll(GameManager.Instance.vanityOptions, o => o.isPurchased);
         RefreshVanityDisplay();
         ShowPanel(equipPanel);
+
+        //GameManager.Instance.AddCoins(10000000);
     }
 
     // Called from GameManager when coin count increments
@@ -128,6 +136,14 @@ public class UIManager : MonoBehaviour
     void UpdateXPDisplay() {
         woodcuttingLevelText.text = "LVL " + levelManager.woodcuttingLevel;
         woodcuttingSlider.value = (float)levelManager.woodcuttingXP / levelManager.GetXPToNextLevel(levelManager.woodcuttingLevel);
+    }
+
+    void UpdateTreeHealthbar() {
+        int currentHP = ResourceNodeManager.Instance.GetCurrentHP();
+        int maxHP = ResourceNodeManager.Instance.GetMaxHP();
+        if (maxHP == 0) return;
+        treeHealthbar.value = (float)currentHP / (float)maxHP;
+        
     }
 
 
@@ -171,6 +187,7 @@ public class UIManager : MonoBehaviour
             audioSource.PlayOneShot(clickConfirm);
             GameManager.Instance.SpendCoins(option.cost);
             option.isPurchased = true;
+            UpdateShopDisplay();
         }
         else
         {
@@ -211,6 +228,15 @@ public class UIManager : MonoBehaviour
         } else {
             legUpgradePrice.text = "LVL " + upgrades[2].requiredLevel;
             legUpgradePrice.color = Color.red;
+        }
+
+        // Update all vanity purchase buttons
+        for (int i = 0; i < vanityShopLabels.Length; i++) {
+            VanityOption option = GameManager.Instance.vanityOptions[i + 1];
+            vanityShopLabels[i].text = option.isPurchased ? "Sold Out" : "$ " + FormatValue(option.cost);
+
+            ColorUtility.TryParseHtmlString(option.isPurchased ? "#808080" : "#E9D14C", out Color color);
+            vanityShopLabels[i].color = color;
         }
     }
 
