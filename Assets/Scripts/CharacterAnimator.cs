@@ -16,9 +16,7 @@ public class CharacterAnimator : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip tapSound;
 
-    [Header("Tool Hitbox")]
-    [SerializeField] private ToolCollider toolCollider;
-
+    public ToolCollider toolCollider;
     private Animator animator;
     private AudioSource audioSource;
 

@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public float XPMultiplier = 1f;
     public float CoinMultiplier = 1f; 
     private int requiredLevelIncrease = 2;
+    public int toolUpgradeCount = 0;
 
 
     // Listeners for invoking UIManager methods
@@ -78,15 +79,19 @@ public class GameManager : MonoBehaviour
     }
 
     // Adds stat boost from upgrade and updates next upgrade's values
-    public void PurchaseUpgrade(int upgradeId) 
+    public void PurchaseUpgrade(int upgradeId)
     {
         Upgrade upgrade = upgrades[upgradeId];
         SpendCoins(upgrade.cost);
-        
+
         upgrade.cost *= (long)upgrade.costMultiplier;
         upgrade.requiredLevel += requiredLevelIncrease;
 
-        if (upgradeId == 0) damage += upgrade.statIncrease;
+        if (upgradeId == 0)
+        {
+            damage += upgrade.statIncrease;
+            toolUpgradeCount++;
+        }
         if (upgradeId == 1) XPMultiplier += upgrade.statIncrease;
         if (upgradeId == 2) CoinMultiplier += upgrade.statIncrease;
 
