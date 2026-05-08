@@ -238,8 +238,8 @@ public class ResourceNodeManager : MonoBehaviour
         resources.Clear();
 
         resources.Add(new ResourceData(ItemID.OakWood, "Oak Tree", ActiveSkill.Woodcutting, 1, 1, 5, 15, 25));
-        resources.Add(new ResourceData(ItemID.PineWood, "Pine Tree", ActiveSkill.Woodcutting, 2, 20, 15, 50, 100));
-        resources.Add(new ResourceData(ItemID.ElmWood, "Elm Tree", ActiveSkill.Woodcutting, 3, 40, 40, 150, 500));
-        resources.Add(new ResourceData(ItemID.AspenWood, "Aspen Tree", ActiveSkill.Woodcutting, 4, 60, 60, 1000, 1000));
+        resources.Add(new ResourceData(ItemID.PineWood, "Pine Tree", ActiveSkill.Woodcutting, 2, 5, 15, 50, 100));
+        resources.Add(new ResourceData(ItemID.ElmWood, "Elm Tree", ActiveSkill.Woodcutting, 3, 10, 40, 150, 500));
+        resources.Add(new ResourceData(ItemID.AspenWood, "Aspen Tree", ActiveSkill.Woodcutting, 4, 20, 60, 1000, 1000));
     }
 }
