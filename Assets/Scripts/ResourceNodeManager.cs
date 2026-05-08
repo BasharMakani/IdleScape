@@ -15,7 +15,11 @@ public class ResourceNodeManager : MonoBehaviour
     [SerializeField] private GameObject bonusIconPrefab;
     [SerializeField] private Vector2 spawnAreaMin = new Vector2(-2f, 3f);
     [SerializeField] private Vector2 spawnAreaMax = new Vector2(2f, 4.5f);
-    private float bonusTimer = 30f;
+
+    [SerializeField] private float bonusSpawnCheckInterval = 1f;
+    [SerializeField] private float bonusSpawnChance = 0.1f;
+
+    private float bonusTimer;
 
     // Manages current active resource
     public ResourceData currentResource { get; private set; }
@@ -53,14 +57,50 @@ public class ResourceNodeManager : MonoBehaviour
     {
         CreateResources();
         LoadRandomUnlockedNode();
+
+        bonusTimer = bonusSpawnCheckInterval;
     }
 
-    public int GetCurrentHP(){
+    void Update()
+    {
+        bonusTimer -= Time.deltaTime;
+
+        if (bonusTimer <= 0f)
+        {
+            bonusTimer = bonusSpawnCheckInterval;
+
+            if (Random.value <= bonusSpawnChance)
+            {
+                SpawnBonusIcon();
+            }
+        }
+    }
+
+    public int GetCurrentHP()
+    {
         return currentHP;
     }
 
-    public int GetMaxHP(){
+    public int GetMaxHP()
+    {
         return maxHP;
+    }
+
+    public void HealCurrentNode(int amount)
+    {
+        if (isFelling)
+        {
+            return;
+        }
+
+        currentHP += amount;
+
+        if (currentHP > maxHP)
+        {
+            currentHP = maxHP;
+        }
+
+        OnHealthChanged?.Invoke();
     }
 
     private TreeNode GetCurrentNodeVisual()
@@ -72,16 +112,6 @@ public class ResourceNodeManager : MonoBehaviour
 
         return spawnPoint.GetComponentInChildren<TreeNode>();
     }
-void Update()
-    {
-        bonusTimer -= Time.deltaTime;
-        if (bonusTimer <= 0f)
-        {
-            bonusTimer = 30f;
-            if (Random.value <= 0.25f)
-                SpawnBonusIcon();
-        }
-    }
 
     void SpawnBonusIcon()
     {
@@ -90,9 +120,9 @@ void Update()
             Random.Range(spawnAreaMin.y, spawnAreaMax.y),
             -69f
         );
+
         Instantiate(bonusIconPrefab, pos, Quaternion.identity);
     }
-
 
     public void MainClick()
     {
@@ -135,7 +165,7 @@ void Update()
             Debug.Log("ResourceNodeManager: HP reached 0. Starting FellSequence.");
             StartCoroutine(FellSequence());
         }
-        
+
         OnHealthChanged?.Invoke();
     }
 
