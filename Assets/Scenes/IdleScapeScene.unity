@@ -1262,6 +1262,7 @@ GameObject:
   - component: {fileID: 2019769424}
   - component: {fileID: 2019769427}
   - component: {fileID: 2019769429}
+  - component: {fileID: 2019769430}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1391,6 +1392,8 @@ MonoBehaviour:
   bonusIconPrefab: {fileID: 4387243402378270542, guid: f078ca3d94b3d4d4a8f36fd0351a63f8, type: 3}
   spawnAreaMin: {x: -2, y: 3}
   spawnAreaMax: {x: 2, y: 4}
+  bonusSpawnCheckInterval: 1
+  bonusSpawnChance: 0.1
   spawnPoint: {fileID: 1444102061}
   fellDuration: 1
 --- !u!82 &2019769429
@@ -1490,6 +1493,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2019769430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019769421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda9ae867fae14d4582c16c484808ab5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bonusIconPrefab: {fileID: 4387243402378270542, guid: f078ca3d94b3d4d4a8f36fd0351a63f8, type: 3}
+  spawnCheckInterval: 0.2
+  spawnChance: 0.05
+  leftScreenPadding: 50
+  rightScreenPadding: 50
+  topUIPadding: 130
+  bottomUIPadding: 170
+  distanceFromCamera: 6
 --- !u!114 &2068831031 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4381251426075927430, guid: f63d9afe0f4e1374aa6bf4e3df8241dd, type: 3}
